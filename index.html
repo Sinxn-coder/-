@@ -167,6 +167,55 @@
         </div>
     </footer>
 
+    <!-- Admin Hidden Modal -->
+    <div id="adminLoginModal" class="success-modal">
+        <div class="success-card" style="max-width: 400px;">
+            <div class="success-icon" style="background: var(--gradient-3);">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2>Admin Portal</h2>
+            <form id="adminLoginForm">
+                <div class="p-row" style="text-align: left;">
+                    <label class="p-label">Email</label>
+                    <input type="email" id="adminEmail" class="p-input" value="admin@bishara.com" required>
+                </div>
+                <div class="p-row" style="text-align: left;">
+                    <label class="p-label">Password</label>
+                    <input type="password" id="adminPassword" class="p-input" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="p-submit-btn" style="background: var(--gradient-3);">
+                    Login to Dashboard
+                </button>
+            </form>
+            <button onclick="closeAdminModal()" class="btn btn-outline-sm" style="margin-top: 1rem;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Overlay -->
+    <div id="adminDashboard" class="admin-dashboard-overlay">
+        <div class="dashboard-header">
+            <div class="nav-logo">
+                <img src="https://img.freepik.com/premium-vector/initial-letter-b-with-leaf-luxury-nature-logo-design_474467-124.jpg"
+                    alt="Logo" class="header-logo-img">
+                <span>Al-Bishara <small>Admin</small></span>
+            </div>
+            <button onclick="logoutAdmin()" class="btn btn-outline-sm">Logout</button>
+        </div>
+        <div class="dashboard-content">
+            <div class="section-header">
+                <h2>Recent Admissions</h2>
+                <p>Manage and review student applications</p>
+            </div>
+            <div id="admissionsList" class="admissions-table-container">
+                <!-- Data will be loaded here -->
+                <div class="text-center">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading admissions...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

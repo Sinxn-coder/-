@@ -176,6 +176,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    /* --- 6.5. Hidden Admin Dashboard Logic --- */
+    const adminLogo = document.querySelector('.nav-logo');
+    const adminLoginModal = document.getElementById('adminLoginModal');
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const adminDashboard = document.getElementById('adminDashboard');
+
+    // Secret Trigger: Alt + Double Click Logo
+    if (adminLogo) {
+        adminLogo.addEventListener('dblclick', (e) => {
+            if (e.altKey) {
+                if (adminLoginModal) {
+                    adminLoginModal.style.display = "flex";
+                    setTimeout(() => adminLoginModal.classList.add('active'), 10);
+                }
+            }
+        });
+    }
+
+    // Close Admin Modal
+    window.closeAdminModal = () => {
+        if (adminLoginModal) {
+            adminLoginModal.classList.remove('active');
+            setTimeout(() => {
+                adminLoginModal.style.display = "none";
+            }, 300);
+        }
+    };
+
+    // Logout Admin
+    window.logoutAdmin = async () => {
+        if (supabase) await supabase.auth.signOut();
+        if (adminDashboard) adminDashboard.classList.remove('active');
+        document.body.style.overflow = "";
+    };
+
+    // Admin Login
+    if (adminLoginForm) {
+        adminLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const btn = adminLoginForm.querySelector('button');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+
+            try {
+                if (!supabase) throw new Error("Supabase SDK not loaded");
+
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+                if (error) throw error;
+
+                // Success
+                closeAdminModal();
+                showAdminDashboard();
+
+            } catch (err) {
+                alert("Access Denied: " + err.message);
+                btn.innerHTML = originalText;
+            }
+        });
+    }
+
+    async function showAdminDashboard() {
+        if (!adminDashboard) return;
+        adminDashboard.classList.add('active');
+        document.body.style.overflow = "hidden";
+
+        loadAdmissions();
+    }
+
+    async function loadAdmissions() {
+        const tableContainer = document.getElementById('admissionsList');
+        if (!tableContainer) return;
+
+        try {
+            const { data, error } = await supabase
+                .from('admissions')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (data.length === 0) {
+                tableContainer.innerHTML = '<div class="text-center" style="padding: 4rem;"><h3>No admissions yet.</h3></div>';
+                return;
+            }
+
+            let html = `
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Parent/Phone</th>
+                            <th>Program</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(item => {
+                const date = new Date(item.created_at).toLocaleDateString();
+                html += `
+                    <tr>
+                        <td>
+                            <strong>${item.student_name}</strong><br>
+                            <small>${item.gender} | DOB: ${item.date_of_birth}</small>
+                        </td>
+                        <td>
+                            ${item.parent_name}<br>
+                            <small>${item.phone_number}</small>
+                        </td>
+                        <td><span class="status-badge">${item.program}</span></td>
+                        <td>${date}</td>
+                        <td>
+                            <button class="btn btn-outline-sm" onclick="alert('Student: ${item.student_name}\\nAddress: ${item.address}\\nNotes: ${item.additional_notes}')">Details</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            tableContainer.innerHTML = html;
+
+        } catch (err) {
+            tableContainer.innerHTML = `<div class="text-center" style="padding: 2rem; color: #ef4444;">Error loading data: ${err.message}</div>`;
+        }
+    }
+
     /* --- 7. Image Modal Logic (Feed Cards) --- */
     const imageModal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
