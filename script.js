@@ -186,9 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     adminTriggers.forEach(trigger => {
         // Method 1: Double Click
         trigger.addEventListener('dblclick', (e) => {
-            if (e.altKey) {
-                openAdminModal();
-            }
+            openAdminModal();
         });
 
         // Method 2: Long Press (for Mobile & Desktop)
