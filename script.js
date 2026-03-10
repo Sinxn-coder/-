@@ -212,16 +212,28 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIdx = 0;
 
         setInterval(() => {
-            // Remove active class from current
-            heroImages[currentIdx].classList.remove('active');
+            // Mark current as 'prev' and remove 'active'
+            const prevImg = heroImages[currentIdx];
+            prevImg.classList.remove('active');
+            prevImg.classList.add('prev');
 
             // Increment index
             currentIdx = (currentIdx + 1) % heroImages.length;
 
-            // Add active class to next
-            heroImages[currentIdx].classList.add('active');
+            // Mark new as 'active' and remove 'prev'
+            const nextImg = heroImages[currentIdx];
+            nextImg.classList.remove('prev');
+            nextImg.classList.add('active');
+
+            // Clean up old 'prev' classes from others after transition
+            setTimeout(() => {
+                heroImages.forEach((img, idx) => {
+                    if (idx !== currentIdx) {
+                        img.classList.remove('prev');
+                    }
+                });
+            }, 800); // Match CSS transition duration
         }, 4000); // 4 seconds
     }
 
 });
-
