@@ -1759,37 +1759,50 @@ img {
     }
 
     .admin-table thead {
-        display: none;
-        /* Hide headers on mobile */
+        display: block !important;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: white;
+        border-bottom: 2px solid var(--glass-border);
+    }
+
+    .admin-table thead tr {
+        display: flex;
+        width: 100%;
+    }
+
+    .admin-table thead th:not(.hide-mobile) {
+        flex: 1;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        border: none;
+        background: #f8fafc;
     }
 
     .admin-row {
         background: white;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         border-radius: var(--radius-md);
         border: 1px solid var(--glass-border);
         box-shadow: var(--shadow-sm);
-        padding: 1rem !important;
+        padding: 0.5rem 1rem !important;
+        display: flex !important;
+        align-items: center;
     }
 
-    .admin-row td {
+    .admin-row td:not(.hide-mobile) {
+        flex: 1;
         border: none;
-        padding: 0.25rem 0 !important;
+        padding: 0.5rem 0 !important;
     }
 
-    /* Add data labels for student/class view on mobile */
-    .admin-row td:first-child::before {
-        content: "Student: ";
-        font-weight: 700;
-        color: var(--text-secondary);
-        font-size: 0.8rem;
-    }
-
+    /* Remove labels from rows on mobile */
+    .admin-row td:first-child::before,
     .admin-row td:nth-child(2)::before {
-        content: "Class: ";
-        font-weight: 700;
-        color: var(--text-secondary);
-        font-size: 0.8rem;
+        content: none !important;
     }
 
     .details-row td {
