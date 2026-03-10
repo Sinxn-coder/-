@@ -1114,6 +1114,13 @@ img {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .dot-sep {
