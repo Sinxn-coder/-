@@ -1740,7 +1740,7 @@ img {
 /* Mobile Responsiveness for Table */
 @media (max-width: 768px) {
     .hide-mobile {
-        display: none;
+        display: none !important;
     }
 
     .admin-table,
