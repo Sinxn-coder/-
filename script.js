@@ -177,15 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /* --- 6.5. Hidden Admin Dashboard Logic --- */
-    const adminLogo = document.querySelector('.nav-logo');
+    const adminTriggers = document.querySelectorAll('.admin-trigger');
     const adminLoginModal = document.getElementById('adminLoginModal');
     const adminLoginForm = document.getElementById('adminLoginForm');
     const adminDashboard = document.getElementById('adminDashboard');
 
-    // Secret Trigger: Alt + Double Click Logo OR Long Press (3s)
-    if (adminLogo) {
-        // Method 1: Alt + Double Click
-        adminLogo.addEventListener('dblclick', (e) => {
+    // Secret Trigger: Alt + Double Click OR Long Press (3s)
+    adminTriggers.forEach(trigger => {
+        // Method 1: Double Click
+        trigger.addEventListener('dblclick', (e) => {
             if (e.altKey) {
                 openAdminModal();
             }
@@ -200,16 +200,16 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(pressTimer);
         };
 
-        adminLogo.addEventListener('mousedown', startPress);
-        adminLogo.addEventListener('touchstart', (e) => {
-            // Prevent default zooming/scrolling behavior for this secret action
+        trigger.addEventListener('mousedown', startPress);
+        trigger.addEventListener('touchstart', (e) => {
             startPress();
         }, { passive: true });
 
-        adminLogo.addEventListener('mouseup', endPress);
-        adminLogo.addEventListener('mouseleave', endPress);
-        adminLogo.addEventListener('touchend', endPress);
-    }
+        trigger.addEventListener('mouseup', endPress);
+        trigger.addEventListener('mouseleave', endPress);
+        trigger.addEventListener('touchend', endPress);
+        trigger.addEventListener('touchcancel', endPress);
+    });
 
     function openAdminModal() {
         if (adminLoginModal) {
