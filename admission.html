@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Admission - مدرسة البشارة</title>
+    <meta name="description"
+        content="Apply for admission at مدرسة البشارة. Join an inspiring madrassa dedicated to Islamic education, moral excellence, and character building.">
+
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Animated Background Glows -->
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="images/madrasa_bishara_logo_transparent.png" alt="مدرسة البشارة Logo" class="header-logo-img">
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="feed.html">Feed</a></li>
+                <li><a href="events.html">Events</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-nav-overlay">
+        <div class="close-menu"><i class="fa-solid fa-times"></i></div>
+        <ul class="mobile-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="feed.html">Public Feed</a></li>
+            <li><a href="events.html">Events</a></li>
+        </ul>
+    </div>
+
+    <main style="padding-top: 100px;">
+        <!-- Admission Form Section -->
+        <section id="admission" class="section-padding" style="padding-top: 2rem;">
+            <div class="premium-form-wrapper reveal-up">
+                <div class="premium-form-header">
+                    <h2>Student Admission</h2>
+                    <p>Begin your child's journey in faith, knowledge, and character at <span class="arabic-text">مدرسة
+                            البشارة</span></p>
+                </div>
+
+                <div class="premium-form-body">
+                    <form id="admissionForm">
+
+                        <div class="p-section-title">
+                            <i class="fa-solid fa-user-graduate"></i> Student Information
+                        </div>
+
+                        <div class="p-grid">
+                            <div class="p-input-group">
+                                <label class="p-label">Student's Full Name</label>
+                                <input type="text" name="Student_Name" class="p-input" placeholder="First and Last Name"
+                                    required>
+                            </div>
+                            <div class="p-input-group">
+                                <label class="p-label">Date of Birth</label>
+                                <input type="date" name="Date_of_Birth" class="p-input" required>
+                            </div>
+                        </div>
+
+                        <div class="p-grid">
+                            <div class="p-input-group">
+                                <label class="p-label">Gender</label>
+                                <select name="Gender" class="p-select" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="p-input-group">
+                                <label class="p-label">Program</label>
+                                <select name="Program" class="p-select" required>
+                                    <option value="" disabled selected>Select Program</option>
+                                    <option value="class-1">Class 1</option>
+                                    <option value="class-2">Class 2</option>
+                                    <option value="class-3">Class 3</option>
+                                    <option value="class-4">Class 4</option>
+                                    <option value="class-5">Class 5</option>
+                                    <option value="class-6">Class 6</option>
+                                    <option value="class-7">Class 7</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-section-title mt-top">
+                            <i class="fa-solid fa-users"></i> Parent / Guardian Information
+                        </div>
+
+                        <div class="p-grid">
+                            <div class="p-input-group">
+                                <label class="p-label">Parent/Guardian Name</label>
+                                <input type="text" name="Parent_Name" class="p-input" placeholder="Full Name" required>
+                            </div>
+                            <div class="p-input-group">
+                                <label class="p-label">Relationship to Student</label>
+                                <input type="text" name="Relationship" class="p-input"
+                                    placeholder="e.g., Father, Mother" required>
+                            </div>
+                        </div>
+
+                        <div class="p-row">
+                            <label class="p-label">Phone Number</label>
+                            <input type="tel" name="Phone_Number" class="p-input" placeholder="Phone Number" required>
+                        </div>
+
+                        <div class="p-row">
+                            <label class="p-label">Home Address</label>
+                            <textarea name="Address" class="p-textarea" placeholder="Full Home Address"
+                                required></textarea>
+                        </div>
+
+                        <div class="p-row">
+                            <label class="p-label">Additional Information (Optional)</label>
+                            <textarea name="Additional_Notes" class="p-textarea"
+                                placeholder="Any previous Islamic education, medical conditions, or special notes..."></textarea>
+                        </div>
+
+                        <button type="submit" class="p-submit-btn">
+                            Submit Application <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter/CTA -->
+        <section class="cta-section section-padding reveal-up">
+            <div class="cta-container glass-panel bg-gradient-overlay">
+                <div class="cta-content">
+                    <h2>Join Our Community Updates</h2>
+                    <p>Receive reflections, event announcements, and madrassa news directly on your phone.
+                        Stay connected with the heart of <span class="arabic-text">مدرسة البشارة</span> through our
+                        WhatsApp Channel.</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="https://chat.whatsapp.com/IZHqyWDH1dqIzc6cRED8l2" target="_blank"
+                            class="btn btn-primary"
+                            style="background-color: #25D366; border-color: #25D366; font-size: 1.1rem; padding: 1rem 2.5rem; display: inline-flex; align-items: center; gap: 0.75rem;">
+                            <i class="fa-brands fa-whatsapp" style="font-size: 1.5rem;"></i>
+                            <span>Join Our WhatsApp Channel</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">
+                    <img src="images/madrasa_bishara_logo_transparent.png" alt="مدرسة البشارة Logo"
+                        class="header-logo-img">
+                </a>
+                <p class="mt-2 text-gray">Guiding students through the light of Islam to become individuals of
+                    exceptional character, empathy, and integrity.</p>
+                <div class="social-links mt-3">
+                    <a href="https://chat.whatsapp.com/IZHqyWDH1dqIzc6cRED8l2" target="_blank" class="social-icon"
+                        title="Join Our WhatsApp Channel"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links-wrapper">
+                <div class="footer-links">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="feed.html">Public Feed</a></li>
+                        <li><a href="events.html">Upcoming Events</a></li>
+                        <li><a href="admission.html">Admissions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <span>123 Education Blvd, Innovation City, IC 10010</span>
+                        </li>
+                        <li>
+                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <span>salam@madrasabishara.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 <span class="arabic-text">مدرسة البشارة</span>. All rights reserved. Open for public sharing.
+            </p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
