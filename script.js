@@ -207,33 +207,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* --- 8. Hero Image Slider (Home Page) --- */
+    const heroContainer = document.querySelector('.hero-image-container');
     const heroImages = document.querySelectorAll('.hero-image-container .hero-img');
-    if (heroImages.length > 1) {
+
+    if (heroContainer && heroImages.length > 1) {
         let currentIdx = 0;
+        let sliderInterval;
+        let isRunning = true;
 
-        setInterval(() => {
-            // Mark current as 'prev' and remove 'active'
-            const prevImg = heroImages[currentIdx];
-            prevImg.classList.remove('active');
-            prevImg.classList.add('prev');
+        const startSlider = () => {
+            sliderInterval = setInterval(() => {
+                // Mark current as 'prev' and remove 'active'
+                const prevImg = heroImages[currentIdx];
+                prevImg.classList.remove('active');
+                prevImg.classList.add('prev');
 
-            // Increment index
-            currentIdx = (currentIdx + 1) % heroImages.length;
+                // Increment index
+                currentIdx = (currentIdx + 1) % heroImages.length;
 
-            // Mark new as 'active' and remove 'prev'
-            const nextImg = heroImages[currentIdx];
-            nextImg.classList.remove('prev');
-            nextImg.classList.add('active');
+                // Mark new as 'active' and remove 'prev'
+                const nextImg = heroImages[currentIdx];
+                nextImg.classList.remove('prev');
+                nextImg.classList.add('active');
 
-            // Clean up old 'prev' classes from others after transition
-            setTimeout(() => {
-                heroImages.forEach((img, idx) => {
-                    if (idx !== currentIdx) {
-                        img.classList.remove('prev');
-                    }
-                });
-            }, 800); // Match CSS transition duration
-        }, 4000); // 4 seconds
+                // Clean up old 'prev' classes after transition
+                setTimeout(() => {
+                    heroImages.forEach((img, idx) => {
+                        if (idx !== currentIdx) img.classList.remove('prev');
+                    });
+                }, 800);
+            }, 4000);
+        };
+
+        const stopSlider = () => {
+            clearInterval(sliderInterval);
+        };
+
+        // Initial start
+        startSlider();
+
+        // Toggle on click
+        heroContainer.addEventListener('click', () => {
+            if (isRunning) {
+                stopSlider();
+                heroContainer.style.opacity = "0.8"; // Visual feedback for pause
+            } else {
+                startSlider();
+                heroContainer.style.opacity = "1";
+            }
+            isRunning = !isRunning;
+        });
     }
 
 });
