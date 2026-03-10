@@ -257,12 +257,95 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (error) throw error;
 
                 // Success
+                btn.innerHTML = originalText;
                 closeAdminModal();
                 showAdminDashboard();
 
             } catch (err) {
                 alert("Access Denied: " + err.message);
                 btn.innerHTML = originalText;
+            }
+        });
+    }
+
+    // Dashboard Tab Switching
+    window.switchAdminTab = (tabName) => {
+        // Toggle active tab button
+        document.querySelectorAll('.dashboard-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent.toLowerCase().includes(tabName));
+        });
+
+        // Show selected content
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.toggle('active', content.id === `tab-${tabName}`);
+        });
+
+        // Special loading per tab if needed
+        if (tabName === 'admissions') loadAdmissions();
+    };
+
+    // Add New Event
+    const addEventForm = document.getElementById('addEventForm');
+    if (addEventForm) {
+        addEventForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = addEventForm.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing...';
+            btn.disabled = true;
+
+            const formData = new FormData(addEventForm);
+            const eventData = {
+                title: formData.get('title'),
+                date: formData.get('date'),
+                time: formData.get('time'),
+                location: formData.get('location'),
+                description: formData.get('description')
+            };
+
+            try {
+                const { error } = await supabase.from('events').insert([eventData]);
+                if (error) throw error;
+
+                alert("Event published successfully!");
+                addEventForm.reset();
+            } catch (err) {
+                alert("Error publishing event: " + err.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    // Update Admin Password
+    const updateProfileForm = document.getElementById('updateProfileForm');
+    if (updateProfileForm) {
+        updateProfileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            const btn = updateProfileForm.querySelector('button');
+
+            if (newPass !== confirmPass) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating...';
+            btn.disabled = true;
+
+            try {
+                const { error } = await supabase.auth.updateUser({ password: newPass });
+                if (error) throw error;
+
+                alert("Password updated successfully!");
+                updateProfileForm.reset();
+            } catch (err) {
+                alert("Update failed: " + err.message);
+            } finally {
+                btn.innerHTML = "Update Password";
+                btn.disabled = false;
             }
         });
     }

@@ -1585,6 +1585,58 @@ img {
     z-index: 10;
 }
 
+/* --- Dashboard Tabs --- */
+.dashboard-nav {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.dashboard-tab {
+    padding: 1rem 0;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.dashboard-tab.active {
+    color: var(--accent-primary);
+}
+
+.dashboard-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-primary);
+    transition: width 0.3s ease;
+}
+
+.dashboard-tab.active::after {
+    width: 100%;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.admin-form-group {
+    max-width: 600px;
+    background: white;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+}
+
 .dashboard-content {
     max-width: var(--container-width);
     margin: 0 auto;
