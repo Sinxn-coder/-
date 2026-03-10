@@ -182,16 +182,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminLoginForm = document.getElementById('adminLoginForm');
     const adminDashboard = document.getElementById('adminDashboard');
 
-    // Secret Trigger: Alt + Double Click Logo
+    // Secret Trigger: Alt + Double Click Logo OR Long Press (3s)
     if (adminLogo) {
+        // Method 1: Alt + Double Click
         adminLogo.addEventListener('dblclick', (e) => {
             if (e.altKey) {
-                if (adminLoginModal) {
-                    adminLoginModal.style.display = "flex";
-                    setTimeout(() => adminLoginModal.classList.add('active'), 10);
-                }
+                openAdminModal();
             }
         });
+
+        // Method 2: Long Press (for Mobile & Desktop)
+        let pressTimer;
+        const startPress = () => {
+            pressTimer = setTimeout(openAdminModal, 3000); // 3 seconds
+        };
+        const endPress = () => {
+            clearTimeout(pressTimer);
+        };
+
+        adminLogo.addEventListener('mousedown', startPress);
+        adminLogo.addEventListener('touchstart', (e) => {
+            // Prevent default zooming/scrolling behavior for this secret action
+            startPress();
+        }, { passive: true });
+
+        adminLogo.addEventListener('mouseup', endPress);
+        adminLogo.addEventListener('mouseleave', endPress);
+        adminLogo.addEventListener('touchend', endPress);
+    }
+
+    function openAdminModal() {
+        if (adminLoginModal) {
+            adminLoginModal.style.display = "flex";
+            setTimeout(() => adminLoginModal.classList.add('active'), 10);
+        }
     }
 
     // Close Admin Modal
