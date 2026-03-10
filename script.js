@@ -373,6 +373,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Store data globally for modal access
+            window.lastAdmissionsData = data;
+
             let html = `
                 <table class="admin-table">
                     <thead>
@@ -390,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach((item, index) => {
                 const date = new Date(item.created_at).toLocaleDateString();
                 html += `
-                    <tr class="admin-row" onclick="toggleRowDetails(${index})">
+                    <tr class="admin-row" onclick="openStudentModal(${index})">
                         <td>
                             <strong>${item.student_name}</strong>
                         </td>
@@ -398,42 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td class="hide-mobile">${item.parent_name}</td>
                         <td class="hide-mobile">${item.phone_number}</td>
                         <td class="hide-mobile">${date}</td>
-                    </tr>
-                    <tr id="details-${index}" class="details-row">
-                        <td colspan="5">
-                            <div class="details-container">
-                                <div class="details-grid">
-                                    <div class="detail-item">
-                                        <label>Full Student Name</label>
-                                        <p>${item.student_name}</p>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Gender & DOB</label>
-                                        <p>${item.gender} | ${item.date_of_birth}</p>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Class/Program</label>
-                                        <p>${item.program}</p>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Parent Name</label>
-                                        <p>${item.parent_name}</p>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Phone Number</label>
-                                        <p>${item.phone_number}</p>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Address</label>
-                                        <p>${item.address || 'N/A'}</p>
-                                    </div>
-                                    <div class="detail-item" style="grid-column: 1 / -1;">
-                                        <label>Additional Notes</label>
-                                        <p>${item.additional_notes || 'No notes provided'}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
                     </tr>
                 `;
             });
@@ -446,24 +413,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Toggle expand/collapse for admission rows
-    window.toggleRowDetails = (index) => {
-        const detailsRow = document.getElementById(`details-${index}`);
-        const masterRows = document.querySelectorAll('.admin-row');
-        const allDetails = document.querySelectorAll('.details-row');
+    window.openStudentModal = function (index) {
+        const item = window.lastAdmissionsData[index];
+        const modal = document.getElementById('studentDetailsModal');
+        const body = document.getElementById('studentDetailsBody');
 
-        const isOpening = !detailsRow.classList.contains('active');
+        if (!item || !modal || !body) return;
 
-        // Close all others
-        allDetails.forEach(row => row.classList.remove('active'));
-        masterRows.forEach(row => row.classList.remove('active'));
+        body.innerHTML = `
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Full Student Name</label>
+                    <p>${item.student_name}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Gender & DOB</label>
+                    <p>${item.gender} | ${item.date_of_birth}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Class/Program</label>
+                    <p>${item.program}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Parent/Guardian Name</label>
+                    <p>${item.parent_name}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Phone Number</label>
+                    <p>${item.phone_number}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Address</label>
+                    <p>${item.address || 'N/A'}</p>
+                </div>
+                <div class="detail-item" style="grid-column: 1 / -1;">
+                    <label>Additional Notes</label>
+                    <p>${item.additional_notes || 'No extra notes provided.'}</p>
+                </div>
+                <div class="detail-item" style="grid-column: 1 / -1;">
+                    <label>Application Date</label>
+                    <p>${new Date(item.created_at).toLocaleString()}</p>
+                </div>
+            </div>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                 <button onclick="closeStudentModal()" class="p-submit-btn" style="background: var(--text-secondary);">Close</button>
+                 <a href="tel:${item.phone_number}" class="p-submit-btn" style="text-decoration: none; text-align: center;">Call Parent</a>
+            </div>
+        `;
 
-        // Toggle the target
-        if (isOpening) {
-            detailsRow.classList.add('active');
-            masterRows[index].classList.add('active');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
+    window.closeStudentModal = function () {
+        const modal = document.getElementById('studentDetailsModal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
-    };
+    }
+
+    // Close modal on background click
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('studentDetailsModal');
+        if (e.target === modal) {
+            closeStudentModal();
+        }
+    });
 
     /* --- 7. Image Modal Logic (Feed Cards) --- */
     const imageModal = document.getElementById('imageModal');
