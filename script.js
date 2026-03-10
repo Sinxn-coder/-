@@ -206,5 +206,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* --- 8. Hero Image Slider (Home Page) --- */
+    const heroImages = document.querySelectorAll('.hero-image-container .hero-img');
+    if (heroImages.length > 1) {
+        let currentIdx = 0;
+
+        setInterval(() => {
+            // Remove active class from current
+            heroImages[currentIdx].classList.remove('active');
+
+            // Increment index
+            currentIdx = (currentIdx + 1) % heroImages.length;
+
+            // Add active class to next
+            heroImages[currentIdx].classList.add('active');
+        }, 4000); // 4 seconds
+    }
+
 });
 
