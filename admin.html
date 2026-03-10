@@ -130,6 +130,20 @@
             .events-management-grid {
                 grid-template-columns: 1fr;
             }
+
+            .logout-text {
+                display: none;
+            }
+
+            .btn-logout {
+                padding: 0.5rem;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
         }
 
         /* Password Toggle Styling */
@@ -203,7 +217,10 @@
                 <span>Al-Bishara <small>Admin Panel</small></span>
             </div>
             <div style="display: flex; gap: 1rem; align-items: center;">
-                <button onclick="logoutAdmin()" class="btn btn-outline-sm">Logout</button>
+                <button onclick="logoutAdmin()" class="btn btn-outline-sm btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
             </div>
         </header>
 
