@@ -1136,7 +1136,7 @@ img {
         grid-template-areas:
             "lead lead"
             "side1 side2";
-        gap: 1.5rem 1rem;
+        gap: 1.5rem 0.5rem;
         margin-top: 3rem;
         justify-items: center;
     }
