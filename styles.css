@@ -1131,36 +1131,49 @@ img {
 /* Mobile Adjustments for Triangular Layout */
 @media (max-width: 768px) {
     .faculty-grid.triangular-layout {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "lead lead"
+            "side1 side2";
+        gap: 1.5rem 1rem;
         margin-top: 3rem;
+        justify-items: center;
     }
 
     .faculty-card {
-        min-width: 140px;
-        /* Smaller min-width to fit two on one line */
-        padding: 0.6rem 1.25rem;
-        flex: 0 1 calc(50% - 1rem);
-        /* Allow supporting cards to share row */
+        width: 100%;
+        max-width: 170px;
+        /* Small cards for side-by-side */
+        min-width: unset;
+        padding: 0.75rem 1rem;
+        flex: unset;
+        /* Remove flex properties */
     }
 
     .faculty-card.main-faculty {
+        grid-area: lead;
         transform: translateY(0);
-        order: -1;
-        /* Place Principal on top */
-        flex: 0 1 100%;
-        /* Force it to take the full top row area */
         max-width: 240px;
-        /* Keep the pill shape centered */
-        margin-bottom: 1rem;
+        /* Principal card can be slightly wider */
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: center;
+        order: unset;
+        /* Order not needed with Grid areas */
+    }
+
+    /* Target other cards by position relative to main-faculty */
+    .faculty-grid.triangular-layout>.faculty-card:first-child {
+        grid-area: side1;
+    }
+
+    .faculty-grid.triangular-layout>.faculty-card:last-child {
+        grid-area: side2;
     }
 
     .faculty-info h3 {
         font-size: 1rem;
-        /* Slightly smaller text for mobile cards */
     }
 
     .faculty-badge {
