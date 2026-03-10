@@ -1131,14 +1131,45 @@ img {
 /* Mobile Adjustments for Triangular Layout */
 @media (max-width: 768px) {
     .faculty-grid.triangular-layout {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
         margin-top: 3rem;
+    }
+
+    .faculty-card {
+        min-width: 140px;
+        /* Smaller min-width to fit two on one line */
+        padding: 0.6rem 1.25rem;
+        flex: 0 1 calc(50% - 1rem);
+        /* Allow supporting cards to share row */
     }
 
     .faculty-card.main-faculty {
         transform: translateY(0);
         order: -1;
-        /* Place Principal on top on mobile */
+        /* Place Principal on top */
+        flex: 0 1 100%;
+        /* Force it to take the full top row area */
+        max-width: 240px;
+        /* Keep the pill shape centered */
+        margin-bottom: 1rem;
+    }
+
+    .faculty-info h3 {
+        font-size: 1rem;
+        /* Slightly smaller text for mobile cards */
+    }
+
+    .faculty-badge {
+        font-size: 0.55rem;
+        padding: 0.1rem 0.5rem;
+        right: 1.5rem;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
