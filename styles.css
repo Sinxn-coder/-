@@ -1051,22 +1051,22 @@ img {
 }
 
 .faculty-card {
-    padding: 1.25rem;
+    padding: 0.75rem 2.5rem;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    overflow: hidden;
-    width: 240px;
-    /* Small, fixed-width cards */
-    min-height: 180px;
+    /* Removed overflow: hidden to allow badge on border */
+    width: fit-content;
+    min-width: 220px;
+    min-height: unset;
     justify-content: center;
+    border-radius: var(--radius-full);
 }
 
 .faculty-card.main-faculty {
-    transform: translateY(-40px);
-    /* Lift the main faculty card */
+    transform: translateY(-25px);
     border-color: var(--accent-primary);
     background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), var(--glass-bg));
     z-index: 2;
@@ -1074,15 +1074,18 @@ img {
 
 .faculty-badge {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centered on the top border */
     background: var(--gradient-1);
     color: white;
-    padding: 0.1rem 0.6rem;
+    padding: 0.2rem 0.8rem;
     border-radius: var(--radius-full);
     font-size: 0.65rem;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
 }
 
 .faculty-info h3 {
