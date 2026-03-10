@@ -1839,14 +1839,16 @@ img {
     background: white;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    overflow-x: auto;
     margin-top: 2rem;
+    max-width: 800px;
+    /* Reduced width for a more focused look */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .admin-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
 }
 
 .admin-table th,
