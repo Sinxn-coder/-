@@ -720,18 +720,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label>Address</label>
                     <p>${address}</p>
                 </div>
-                <div class="detail-item" style="grid-column: 1 / -1;">
+                <div class="detail-item">
                     <label>Additional Notes</label>
                     <p>${notes}</p>
                 </div>
-                <div class="detail-item" style="grid-column: 1 / -1;">
+                <div class="detail-item">
                     <label>Application Date</label>
                     <p>${dateStr}</p>
                 </div>
             </div>
-            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-                <button onclick="closeStudentModal()" class="p-submit-btn" style="background: var(--text-secondary);">Close</button>
-                <a href="tel:${phone}" class="p-submit-btn" style="text-decoration: none; text-align: center;">Call Parent</a>
+            <div class="modal-footer" style="padding: 1.5rem 2rem; display: flex; gap: 1rem; border-top: 1px solid #f1f5f9; background: #fff;">
+                <button onclick="closeStudentModal()" class="p-submit-btn" style="background: var(--text-secondary); flex: 1;">Close</button>
+                <a href="tel:${phone}" class="p-submit-btn" style="text-decoration: none; text-align: center; flex: 1;">Call Parent</a>
             </div>
         `;
 
