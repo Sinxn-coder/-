@@ -1675,20 +1675,21 @@ img {
 
 .admin-row {
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .admin-row:hover {
-    background: #f1f5f9;
+    background: #f9fafb;
 }
 
 .admin-row.active {
-    background: #f8fafc;
+    background: white;
+    border-bottom: 1px solid transparent !important;
 }
 
 .details-row {
     display: none;
-    background: #f8fafc;
+    background: white;
 }
 
 .details-row.active {
@@ -1704,11 +1705,11 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
-    background: white;
+    background: #f8fafc;
+    /* Subtle contrast background for expanded details */
     padding: 2rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-sm);
+    border-top: 1px solid var(--glass-border);
 }
 
 .detail-item label {
@@ -1791,6 +1792,16 @@ img {
         padding: 0.5rem 1rem !important;
         display: flex !important;
         align-items: center;
+        transition: all 0.2s ease;
+    }
+
+    .admin-row.active {
+        margin-bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: none;
+        background: #f8fafc;
+        border-bottom-color: transparent;
     }
 
     .admin-row td:not(.hide-mobile) {
@@ -1805,21 +1816,28 @@ img {
         content: none !important;
     }
 
-    .details-row td {
-        padding: 0 !important;
-        border: none;
+    .details-row.active {
+        display: block !important;
+        margin-top: -0.5rem;
+        /* Pull up to merge with top half */
+        margin-bottom: 1rem;
     }
 
     .details-container {
-        padding: 0 1rem 1rem 1rem;
+        padding: 0;
     }
 
     .details-grid {
         grid-template-columns: 1fr;
-        padding: 1.25rem;
+        padding: 1.5rem;
         gap: 1.25rem;
+        border: 1px solid var(--glass-border);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        /* Very subtle separator */
         border-radius: 0 0 var(--radius-md) var(--radius-md);
-        border-top: none;
+        background: #f8fafc;
+        /* Keep subtle detail background */
+        box-shadow: var(--shadow-sm);
     }
 
     .admin-form-group {
