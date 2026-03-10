@@ -1746,10 +1746,16 @@ img {
     .admin-table,
     .admin-table thead,
     .admin-table tbody,
-    .admin-table th,
-    .admin-table td,
-    .admin-table tr {
+    .admin-table tr:not(.details-row) {
         display: block;
+    }
+
+    .details-row:not(.active) {
+        display: none !important;
+    }
+
+    .details-row.active {
+        display: block !important;
     }
 
     .admin-table thead {
