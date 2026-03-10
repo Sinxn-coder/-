@@ -266,15 +266,82 @@
             <button onclick="logoutAdmin()" class="btn btn-outline-sm">Logout</button>
         </div>
         <div class="dashboard-content">
-            <div class="section-header">
-                <h2>Recent Admissions</h2>
-                <p>Manage and review student applications</p>
+            <nav class="dashboard-nav">
+                <div class="dashboard-tab active" onclick="switchAdminTab('admissions')">Admissions</div>
+                <div class="dashboard-tab" onclick="switchAdminTab('events')">Add Event</div>
+                <div class="dashboard-tab" onclick="switchAdminTab('profile')">Profile Settings</div>
+            </nav>
+
+            <!-- Admissions Tab -->
+            <div id="tab-admissions" class="tab-content active">
+                <div class="section-header">
+                    <h2>Student Admissions</h2>
+                    <p>Manage and review student applications</p>
+                </div>
+                <div id="admissionsList" class="admissions-table-container">
+                    <div class="text-center" style="padding: 2rem;">
+                        <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                        <p>Loading admissions...</p>
+                    </div>
+                </div>
             </div>
-            <div id="admissionsList" class="admissions-table-container">
-                <!-- Data will be loaded here -->
-                <div class="text-center">
-                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
-                    <p>Loading admissions...</p>
+
+            <!-- Events Tab -->
+            <div id="tab-events" class="tab-content">
+                <div class="section-header">
+                    <h2>Add New Event</h2>
+                    <p>Post upcoming school events to the website</p>
+                </div>
+                <div class="admin-form-group">
+                    <form id="addEventForm">
+                        <div class="p-row">
+                            <label class="p-label">Event Title</label>
+                            <input type="text" name="title" class="p-input" required
+                                placeholder="e.g. Annual Day Celebration">
+                        </div>
+                        <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="p-row">
+                                <label class="p-label">Date</label>
+                                <input type="date" name="date" class="p-input" required>
+                            </div>
+                            <div class="p-row">
+                                <label class="p-label">Time</label>
+                                <input type="text" name="time" class="p-input" placeholder="e.g. 10:00 AM">
+                            </div>
+                        </div>
+                        <div class="p-row">
+                            <label class="p-label">Location</label>
+                            <input type="text" name="location" class="p-input" required
+                                placeholder="e.g. School Auditorium">
+                        </div>
+                        <div class="p-row">
+                            <label class="p-label">Description</label>
+                            <textarea name="description" class="p-textarea" placeholder="Event details..."></textarea>
+                        </div>
+                        <button type="submit" class="p-submit-btn">Publish Event</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="tab-profile" class="tab-content">
+                <div class="section-header">
+                    <h2>Admin Profile</h2>
+                    <p>Update your credentials and account settings</p>
+                </div>
+                <div class="admin-form-group">
+                    <form id="updateProfileForm">
+                        <div class="p-row">
+                            <label class="p-label">New Password</label>
+                            <input type="password" id="newPassword" class="p-input" required placeholder="••••••••">
+                        </div>
+                        <div class="p-row">
+                            <label class="p-label">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="p-input" required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="p-submit-btn" style="background: var(--gradient-3);">Update
+                            Password</button>
+                    </form>
                 </div>
             </div>
         </div>
