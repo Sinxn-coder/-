@@ -378,31 +378,61 @@ document.addEventListener('DOMContentLoaded', () => {
                     <thead>
                         <tr>
                             <th>Student</th>
-                            <th>Parent/Phone</th>
-                            <th>Program</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th>Class/Program</th>
+                            <th class="hide-mobile">Parent Name</th>
+                            <th class="hide-mobile">Phone</th>
+                            <th class="hide-mobile">Date</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
 
-            data.forEach(item => {
+            data.forEach((item, index) => {
                 const date = new Date(item.created_at).toLocaleDateString();
                 html += `
-                    <tr>
+                    <tr class="admin-row" onclick="toggleRowDetails(${index})">
                         <td>
-                            <strong>${item.student_name}</strong><br>
-                            <small>${item.gender} | DOB: ${item.date_of_birth}</small>
-                        </td>
-                        <td>
-                            ${item.parent_name}<br>
-                            <small>${item.phone_number}</small>
+                            <strong>${item.student_name}</strong>
                         </td>
                         <td><span class="status-badge">${item.program}</span></td>
-                        <td>${date}</td>
-                        <td>
-                            <button class="btn btn-outline-sm" onclick="alert('Student: ${item.student_name}\\nAddress: ${item.address}\\nNotes: ${item.additional_notes}')">Details</button>
+                        <td class="hide-mobile">${item.parent_name}</td>
+                        <td class="hide-mobile">${item.phone_number}</td>
+                        <td class="hide-mobile">${date}</td>
+                    </tr>
+                    <tr id="details-${index}" class="details-row">
+                        <td colspan="5">
+                            <div class="details-container">
+                                <div class="details-grid">
+                                    <div class="detail-item">
+                                        <label>Full Student Name</label>
+                                        <p>${item.student_name}</p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <label>Gender & DOB</label>
+                                        <p>${item.gender} | ${item.date_of_birth}</p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <label>Class/Program</label>
+                                        <p>${item.program}</p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <label>Parent Name</label>
+                                        <p>${item.parent_name}</p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <label>Phone Number</label>
+                                        <p>${item.phone_number}</p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <label>Address</label>
+                                        <p>${item.address || 'N/A'}</p>
+                                    </div>
+                                    <div class="detail-item" style="grid-column: 1 / -1;">
+                                        <label>Additional Notes</label>
+                                        <p>${item.additional_notes || 'No notes provided'}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -415,6 +445,25 @@ document.addEventListener('DOMContentLoaded', () => {
             tableContainer.innerHTML = `<div class="text-center" style="padding: 2rem; color: #ef4444;">Error loading data: ${err.message}</div>`;
         }
     }
+
+    // Toggle expand/collapse for admission rows
+    window.toggleRowDetails = (index) => {
+        const detailsRow = document.getElementById(`details-${index}`);
+        const masterRows = document.querySelectorAll('.admin-row');
+        const allDetails = document.querySelectorAll('.details-row');
+
+        const isOpening = !detailsRow.classList.contains('active');
+
+        // Close all others
+        allDetails.forEach(row => row.classList.remove('active'));
+        masterRows.forEach(row => row.classList.remove('active'));
+
+        // Toggle the target
+        if (isOpening) {
+            detailsRow.classList.add('active');
+            masterRows[index].classList.add('active');
+        }
+    };
 
     /* --- 7. Image Modal Logic (Feed Cards) --- */
     const imageModal = document.getElementById('imageModal');
