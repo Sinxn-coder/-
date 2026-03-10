@@ -1761,6 +1761,7 @@ img {
     max-height: 90vh;
     overflow-y: auto;
     animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Inter', sans-serif;
 }
 
 @keyframes modalAppear {
@@ -1776,7 +1777,7 @@ img {
 }
 
 .modal-header {
-    padding: 1.5rem 2rem;
+    padding: 1.25rem 2rem;
     border-bottom: 1px solid var(--glass-border);
     display: flex;
     justify-content: space-between;
@@ -1789,9 +1790,10 @@ img {
 
 .modal-header h3 {
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
 }
 
 .modal-body {
@@ -1804,7 +1806,7 @@ img {
 }
 
 .detail-item {
-    padding: 1.25rem 2rem;
+    padding: 0.85rem 2rem;
     border-bottom: 1px solid #f1f5f9;
     background: white;
 }
@@ -1819,19 +1821,20 @@ img {
 
 .detail-item label {
     display: block;
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--text-secondary);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.15rem;
     font-weight: 700;
 }
 
 .detail-item p {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.92rem;
     color: var(--text-primary);
     font-weight: 500;
+    line-height: 1.4;
 }
 
 .close-btn {
