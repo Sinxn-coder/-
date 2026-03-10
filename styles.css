@@ -1585,12 +1585,23 @@ img {
     z-index: 10;
 }
 
-/* --- Dashboard Tabs --- */
 .dashboard-nav {
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--glass-border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    white-space: nowrap;
+    padding: 0 0.5rem;
+}
+
+.dashboard-nav::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .dashboard-tab {
@@ -1600,6 +1611,7 @@ img {
     cursor: pointer;
     position: relative;
     transition: color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .dashboard-tab.active {
@@ -1731,14 +1743,69 @@ img {
         display: none;
     }
 
+    .admin-table,
+    .admin-table thead,
+    .admin-table tbody,
     .admin-table th,
-    .admin-table td {
-        padding: 1rem;
+    .admin-table td,
+    .admin-table tr {
+        display: block;
+    }
+
+    .admin-table thead {
+        display: none;
+        /* Hide headers on mobile */
+    }
+
+    .admin-row {
+        background: white;
+        margin-bottom: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--shadow-sm);
+        padding: 1rem !important;
+    }
+
+    .admin-row td {
+        border: none;
+        padding: 0.25rem 0 !important;
+    }
+
+    /* Add data labels for student/class view on mobile */
+    .admin-row td:first-child::before {
+        content: "Student: ";
+        font-weight: 700;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+    }
+
+    .admin-row td:nth-child(2)::before {
+        content: "Class: ";
+        font-weight: 700;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+    }
+
+    .details-row td {
+        padding: 0 !important;
+        border: none;
+    }
+
+    .details-container {
+        padding: 0 1rem 1rem 1rem;
     }
 
     .details-grid {
         grid-template-columns: 1fr;
+        padding: 1.25rem;
+        gap: 1.25rem;
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+        border-top: none;
+    }
+
+    .admin-form-group {
         padding: 1.5rem;
+        border-radius: var(--radius-md);
     }
 }
 
