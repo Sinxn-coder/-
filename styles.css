@@ -1033,6 +1033,87 @@ img {
     }
 }
 
+/* --- 7.6. Faculty Section --- */
+.faculties {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl) 2rem;
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.faculty-card {
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.faculty-card.main-faculty {
+    border-color: var(--accent-primary);
+    background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), var(--glass-bg));
+}
+
+.faculty-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--gradient-1);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.faculty-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.faculty-info .role {
+    color: var(--accent-primary);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.faculty-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 1px solid var(--glass-border);
+}
+
+.faculty-contact:hover {
+    background: var(--accent-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+}
+
+.faculty-contact i {
+    font-size: 1.1rem;
+}
+
 /* --- 8. Events Section --- */
 .events {
     background-color: var(--bg-secondary);
