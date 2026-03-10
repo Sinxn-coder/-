@@ -98,54 +98,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* --- 6. WhatsApp Admission Form Submission --- */
+    /* --- 6. Supabase Admission Form Submission --- */
     const admissionForm = document.getElementById('admissionForm');
 
+    // Supabase Configuration
+    const supabaseUrl = 'https://kwrszibirsysedhhfkkq.supabase.co';
+    const supabaseKey = 'sb_publishable_UyavIQCoc3VM2Gx6GwwIkA_ebDi47DW';
+    const supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+
     if (admissionForm) {
-        admissionForm.addEventListener('submit', (e) => {
+        admissionForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(admissionForm);
-
-            // Format WhatsApp Message
-            let message = "assalamu alaikum! I would like to submit a new admission application:%0A%0A";
-
-            message += "*-- Student Information --*%0A";
-            message += `*Name:* ${formData.get('Student_Name')}%0A`;
-            message += `*DOB:* ${formData.get('Date_of_Birth')}%0A`;
-            message += `*Gender:* ${formData.get('Gender')}%0A`;
-            message += `*Program:* ${formData.get('Program')}%0A%0A`;
-
-            message += "*-- Parent/Guardian Information --*%0A";
-            message += `*Parent Name:* ${formData.get('Parent_Name')}%0A`;
-            message += `*Relationship:* ${formData.get('Relationship')}%0A`;
-            message += `*Phone:* ${formData.get('Phone_Number')}%0A`;
-            message += `*Address:* ${formData.get('Address')}%0A%0A`;
-
-            const notes = formData.get('Additional_Notes');
-            if (notes && notes.trim() !== "") {
-                message += `*Notes:* ${notes}%0A`;
-            }
-
-            // Admin Phone Number (Zubair Saqafi - Lead Faculty)
-            const phoneNumber = "918113957833";
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-
-            // Update button UI temporarily
+            // Update button UI to 'Processing'
             const btn = admissionForm.querySelector('button');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Opening WhatsApp...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
             btn.style.opacity = '0.8';
+            btn.disabled = true;
 
-            // Redirect to WhatsApp
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
+            try {
+                // Get form data
+                const formData = new FormData(admissionForm);
+                const submissionData = {
+                    student_name: formData.get('Student_Name'),
+                    date_of_birth: formData.get('Date_of_Birth'),
+                    gender: formData.get('Gender'),
+                    program: formData.get('Program'),
+                    parent_name: formData.get('Parent_Name'),
+                    relationship: formData.get('Relationship'),
+                    phone_number: formData.get('Phone_Number'),
+                    address: formData.get('Address'),
+                    additional_notes: formData.get('Additional_Notes') || ""
+                };
 
-                // Reset form and button
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
-                admissionForm.reset();
+                if (!supabase) throw new Error("Supabase SDK not loaded");
+
+                // Save to Supabase
+                const { error } = await supabase
+                    .from('admissions')
+                    .insert([submissionData]);
+
+                if (error) throw error;
+
+                // Success State
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Submitted';
+                btn.style.background = 'var(--accent-primary)';
 
                 // Show Success Modal
                 const successModal = document.getElementById('successModal');
@@ -153,7 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     successModal.style.display = "flex";
                     setTimeout(() => successModal.classList.add('active'), 10);
                 }
-            }, 800);
+
+                admissionForm.reset();
+
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert('Submission failed. Please try again or contact support.');
+                btn.innerHTML = originalText;
+            } finally {
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }
         });
     }
 
