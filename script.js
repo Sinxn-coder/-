@@ -229,8 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout Admin
     window.logoutAdmin = async () => {
         if (supabase) await supabase.auth.signOut();
-        if (adminDashboard) adminDashboard.classList.remove('active');
-        document.body.style.overflow = "";
+        window.location.href = 'index.html';
     };
 
     // Admin Login
@@ -257,7 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Success
                 btn.innerHTML = originalText;
                 closeAdminModal();
-                showAdminDashboard();
+                // Redirect to the separate admin page
+                window.location.href = 'admin.html';
 
             } catch (err) {
                 alert("Access Denied: " + err.message);
@@ -481,112 +481,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* --- 7. Image Modal Logic (Feed Cards) --- */
-    const imageModal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalCaption = document.getElementById('modalCaption');
-    const closeModal = document.querySelector('.close-modal');
-    const viewButtons = document.querySelectorAll('.feed-card .read-more');
+    /* --- 9. Admin Page Initialization & Security --- */
+    const adminPage = document.getElementById('adminPage');
+    const authLoading = document.getElementById('authLoading');
 
-    if (imageModal && viewButtons.length > 0) {
-        viewButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
+    async function checkAdminAuth() {
+        // Only run if we are on the admin page
+        if (!adminPage) return;
 
-                // Get the image from the parent card
-                const card = btn.closest('.feed-card');
-                const cardImg = card.querySelector('.card-image img');
-                const cardTitle = card.querySelector('h3').textContent;
+        try {
+            if (!supabase) throw new Error("Supabase not initialized");
 
-                if (cardImg) {
-                    imageModal.style.display = "flex";
-                    // Small delay for transition
-                    setTimeout(() => imageModal.classList.add('active'), 10);
-                    modalImg.src = cardImg.src;
-                    modalCaption.innerHTML = cardTitle;
-                    document.body.style.overflow = "hidden"; // Prevent scroll
-                }
-            });
-        });
+            const { data: { session }, error } = await supabase.auth.getSession();
 
-        const closeImageModal = () => {
-            imageModal.classList.remove('active');
-            setTimeout(() => {
-                imageModal.style.display = "none";
-            }, 300);
-            document.body.style.overflow = ""; // Re-enable scroll
-        };
+            if (error || !session) {
+                // Not logged in, redirect to home
+                window.location.href = 'index.html';
+                return;
+            }
 
-        if (closeModal) {
-            closeModal.addEventListener('click', closeImageModal);
+            // Logged in! Show the dashboard
+            authLoading.style.display = 'none';
+            adminPage.style.display = 'flex';
+            loadAdmissions();
+
+        } catch (err) {
+            console.error("Auth check failed:", err);
+            window.location.href = 'index.html';
         }
-
-        // Close on click outside the image
-        imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) {
-                closeImageModal();
-            }
-        });
-
-        // Close on ESC key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape" && imageModal.classList.contains('active')) {
-                closeImageModal();
-            }
-        });
     }
 
-    /* --- 8. Hero Image Slider (Home Page) --- */
-    const heroContainer = document.querySelector('.hero-image-container');
-    const heroImages = document.querySelectorAll('.hero-image-container .hero-img');
-
-    if (heroContainer && heroImages.length > 1) {
-        let currentIdx = 0;
-        let sliderInterval;
-        let isRunning = true;
-
-        const startSlider = () => {
-            sliderInterval = setInterval(() => {
-                // Mark current as 'prev' and remove 'active'
-                const prevImg = heroImages[currentIdx];
-                prevImg.classList.remove('active');
-                prevImg.classList.add('prev');
-
-                // Increment index
-                currentIdx = (currentIdx + 1) % heroImages.length;
-
-                // Mark new as 'active' and remove 'prev'
-                const nextImg = heroImages[currentIdx];
-                nextImg.classList.remove('prev');
-                nextImg.classList.add('active');
-
-                // Clean up old 'prev' classes after transition
-                setTimeout(() => {
-                    heroImages.forEach((img, idx) => {
-                        if (idx !== currentIdx) img.classList.remove('prev');
-                    });
-                }, 800);
-            }, 4000);
-        };
-
-        const stopSlider = () => {
-            clearInterval(sliderInterval);
-        };
-
-        // Initial start
-        startSlider();
-
-        // Toggle on click
-        heroContainer.addEventListener('click', () => {
-            if (isRunning) {
-                stopSlider();
-                heroContainer.style.opacity = "0.8"; // Visual feedback for pause
-            } else {
-                startSlider();
-                heroContainer.style.opacity = "1";
-            }
-            isRunning = !isRunning;
-        });
-    }
+    // Run auth check on initialization
+    checkAdminAuth();
 
 });
