@@ -1076,7 +1076,8 @@ img {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centered on the top border */
+    transform: translate(-50%, -50%);
+    /* Centered on the top border */
     background: var(--gradient-1);
     color: white;
     padding: 0.2rem 0.8rem;
@@ -1129,13 +1130,15 @@ img {
 
 /* Mobile Adjustments for Triangular Layout */
 @media (max-width: 768px) {
-    .faculty-card.main-faculty {
-        transform: translateY(0);
-        /* Reset offset on mobile */
+    .faculty-grid.triangular-layout {
+        flex-direction: column;
+        margin-top: 3rem;
     }
 
-    .faculty-grid.triangular-layout {
-        margin-top: 3rem;
+    .faculty-card.main-faculty {
+        transform: translateY(0);
+        order: -1;
+        /* Place Principal on top on mobile */
     }
 }
 
