@@ -128,9 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 message += `*Notes:* ${notes}%0A`;
             }
 
-            // Admin Phone Number (Include precise country code format, typical for India is 91)
-            // Using 919846170136 as per user's 9846170136 number
-            const phoneNumber = "919846170136";
+            // Admin Phone Number (Zubair Saqafi - Lead Faculty)
+            const phoneNumber = "918113957833";
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
             // Update button UI temporarily
@@ -147,9 +146,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerHTML = originalText;
                 btn.style.opacity = '1';
                 admissionForm.reset();
+
+                // Show Success Modal
+                const successModal = document.getElementById('successModal');
+                if (successModal) {
+                    successModal.style.display = "flex";
+                    setTimeout(() => successModal.classList.add('active'), 10);
+                }
             }, 800);
         });
     }
+
+    // Global function to close success modal
+    window.closeSuccessModal = () => {
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            successModal.classList.remove('active');
+            setTimeout(() => {
+                successModal.style.display = "none";
+            }, 300);
+        }
+    };
 
     /* --- 7. Image Modal Logic (Feed Cards) --- */
     const imageModal = document.getElementById('imageModal');
