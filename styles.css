@@ -2061,6 +2061,7 @@ img {
 .p-input,
 .p-select,
 .p-textarea {
+    display: block;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -2407,12 +2408,6 @@ img {
     .p-section-title {
         font-size: 1.2rem;
         margin-bottom: 1.5rem;
-    }
-
-    /* Fix for date field overflow/touching right border */
-    .p-input[type="date"] {
-        width: calc(100% - 0.5rem);
-        margin-right: 0.5rem;
     }
 
     .p-section-title.mt-top {
