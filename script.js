@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Header Section
         doc.setFontSize(18);
         doc.setTextColor(40);
-        doc.text("Al-Bishara English Medium Madrassa", 105, 15, { align: 'center' });
+        doc.text("Al-Bishara Madrassa", 105, 15, { align: 'center' });
         
         doc.setFontSize(14);
         doc.setTextColor(100);
