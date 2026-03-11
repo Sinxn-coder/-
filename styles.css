@@ -1875,6 +1875,49 @@ img {
     }
 }
 
+/* Export Selection Modal */
+.export-options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.export-option {
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f1f5f9;
+    background: white;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.export-option:nth-child(even) {
+    background: #f8fafc;
+}
+
+.export-option:hover {
+    background: #eff6ff;
+    color: var(--primary);
+}
+
+.export-option:last-child {
+    border-bottom: none;
+}
+
+.export-option i {
+    opacity: 0.3;
+    transition: all 0.2s;
+}
+
+.export-option:hover i {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
 /* Mobile Responsiveness for Table */
 @media (max-width: 768px) {
     .hide-mobile {

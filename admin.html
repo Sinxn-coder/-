@@ -10,6 +10,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <style>
         body {
             background: #f8fafc;
@@ -241,9 +243,29 @@
                         <h2>Student Admissions</h2>
                         <p>Manage and review student applications</p>
                     </div>
-                    <button onclick="loadAdmissions()" class="btn btn-outline-sm" title="Refresh List">
-                        <i class="fa-solid fa-arrows-rotate"></i>
-                    </button>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="openExportModal()" class="btn btn-outline-sm" title="Export to PDF">
+                            <i class="fa-solid fa-file-pdf"></i> Export
+                        </button>
+                        <button onclick="loadAdmissions()" class="btn btn-outline-sm" title="Refresh List">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Export Selection Modal (Hidden by default) -->
+                <div id="exportModal" class="dashboard-modal-overlay">
+                    <div class="dashboard-modal-content" style="max-width: 500px;">
+                        <div class="modal-header">
+                            <h3>Select Class to Export</h3>
+                            <button onclick="closeExportModal()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="exportOptionsList" class="export-options-grid">
+                                <!-- Options injected by JS -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Category Chips -->

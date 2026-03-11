@@ -747,6 +747,108 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- PDF Export Logic ---
+    window.openExportModal = function () {
+        const modal = document.getElementById('exportModal');
+        const list = document.getElementById('exportOptionsList');
+        if (!modal || !list) return;
+
+        const classes = [
+            { id: 'all', label: 'All Students' },
+            { id: 'class-1', label: 'Class 1' },
+            { id: 'class-2', label: 'Class 2' },
+            { id: 'class-3', label: 'Class 3' },
+            { id: 'class-4', label: 'Class 4' },
+            { id: 'class-5', label: 'Class 5' },
+            { id: 'class-6', label: 'Class 6' },
+            { id: 'class-7', label: 'Class 7' }
+        ];
+
+        list.innerHTML = classes.map(cls => `
+            <div class="export-option" onclick="exportClassData('${cls.id}', '${cls.label}')">
+                <span>${cls.label}</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        `).join('');
+
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+    };
+
+    window.closeExportModal = function () {
+        const modal = document.getElementById('exportModal');
+        if (modal) {
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+    };
+
+    window.exportClassData = async function (programId, label) {
+        const { jsPDF } = window.jspdf;
+        const data = window.lastAdmissionsData || [];
+
+        // Filter data
+        const filteredData = programId === 'all'
+            ? data
+            : data.filter(item => {
+                const itemProgram = (item.program || item.Program || "").toString().toLowerCase();
+                return itemProgram === programId.toLowerCase();
+            });
+
+        if (filteredData.length === 0) {
+            alert(`No student data found for ${label}`);
+            return;
+        }
+
+        const doc = new jsPDF();
+
+        // Header Section
+        doc.setFontSize(18);
+        doc.setTextColor(40);
+        doc.text("Al-Bishara English Medium Madrassa", 105, 15, { align: 'center' });
+        
+        doc.setFontSize(14);
+        doc.setTextColor(100);
+        doc.text(`Student Admission List - ${label}`, 105, 25, { align: 'center' });
+
+        // Table Generation
+        const tableColumn = ["Sl No", "Student Name", "Class", "Parent Name", "Phone Number", "Date"];
+        const tableRows = [];
+
+        filteredData.forEach((item, index) => {
+            const studentData = [
+                index + 1,
+                item.student_name || item.Student_Name || 'Unknown',
+                item.program || item.Program || 'N/A',
+                item.parent_name || item.Parent_Name || 'N/A',
+                item.phone_number || item.Phone || 'N/A',
+                new Date(item.created_at).toLocaleDateString()
+            ];
+            tableRows.push(studentData);
+        });
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 35,
+            theme: 'grid',
+            headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+            bodyStyles: { textColor: 50 },
+            alternateRowStyles: { fillColor: [245, 245, 245] },
+            margin: { top: 35 }
+        });
+
+        // Summary
+        const finalY = doc.lastAutoTable.finalY + 10;
+        doc.setFontSize(10);
+        doc.setTextColor(150);
+        doc.text(`Total Students: ${filteredData.length}`, 14, finalY);
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, finalY + 5);
+
+        doc.save(`Admissions_${label.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`);
+        closeExportModal();
+    };
+
     // Close modal on background click
     window.addEventListener('click', (e) => {
         const modal = document.getElementById('studentDetailsModal');
