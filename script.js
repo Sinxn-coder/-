@@ -333,6 +333,12 @@ document.addEventListener('DOMContentLoaded', () => {
             content.classList.toggle('active', content.id === `tab-${tabName}`);
         });
 
+        // Conditionally show/hide Export button (only for admissions)
+        const exportBtn = document.querySelector('.btn-export');
+        if (exportBtn) {
+            exportBtn.style.display = (tabName === 'admissions') ? 'flex' : 'none';
+        }
+
         // Special loading per tab if needed
         if (tabName === 'admissions') loadAdmissions();
         if (tabName === 'events') loadAdminEvents();
