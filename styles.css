@@ -1978,6 +1978,10 @@ img {
         transition: all 0.2s ease;
     }
 
+    .admin-row:nth-child(even) {
+        background: #f8fafc;
+    }
+
     .admin-row:active {
         background: #f1f5f9;
         transform: scale(0.98);
