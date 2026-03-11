@@ -135,11 +135,11 @@
                 grid-template-columns: 1fr;
             }
 
-            .logout-text {
+            .logout-text, .export-text {
                 display: none;
             }
 
-            .btn-logout {
+            .btn-logout, .btn-export {
                 padding: 0.5rem;
                 width: 40px;
                 height: 40px;
@@ -220,7 +220,11 @@
                 <img src="images/madrasa_bishara_logo_transparent.png" alt="Logo" class="header-logo-img">
                 <span>Al-Bishara <small>Admin Panel</small></span>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <button onclick="openExportModal()" class="btn btn-outline-sm btn-export" title="Export to PDF">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span class="export-text">Export</span>
+                </button>
                 <button onclick="logoutAdmin()" class="btn btn-outline-sm btn-logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span class="logout-text">Logout</span>
@@ -243,14 +247,9 @@
                         <h2>Student Admissions</h2>
                         <p>Manage and review student applications</p>
                     </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button onclick="openExportModal()" class="btn btn-outline-sm" title="Export to PDF">
-                            <i class="fa-solid fa-file-pdf"></i> Export
-                        </button>
-                        <button onclick="loadAdmissions()" class="btn btn-outline-sm" title="Refresh List">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                        </button>
-                    </div>
+                    <button onclick="loadAdmissions()" class="btn btn-outline-sm" title="Refresh List">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
                 </div>
 
                 <!-- Export Selection Modal (Hidden by default) -->
