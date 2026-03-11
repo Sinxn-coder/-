@@ -1966,9 +1966,11 @@ img {
     .admin-row {
         background: white;
         margin-bottom: 0.5rem;
-        border-radius: var(--radius-md);
+        border-radius: 0;
         border: 1px solid var(--glass-border);
-        box-shadow: var(--shadow-sm);
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
         padding: 1rem !important;
         /* Increased padding for better tap target */
         display: flex !important;
@@ -1995,7 +1997,7 @@ img {
 
     .admin-form-group {
         padding: 1.5rem;
-        border-radius: var(--radius-md);
+        border-radius: 0;
     }
 }
 
