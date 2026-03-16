@@ -851,7 +851,32 @@ document.addEventListener('DOMContentLoaded', () => {
         doc.text(`Total Students: ${filteredData.length}`, 14, finalY);
         doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, finalY + 5);
 
-        doc.save(`Admissions_${label.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`);
+        // PDF Output Handling
+        const fileName = `Admissions_${label.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+
+        // Check for Native Share API (iOS/Android Support)
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([], fileName, { type: 'application/pdf' })] })) {
+            try {
+                const pdfBlob = doc.output('blob');
+                const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+                
+                await navigator.share({
+                    files: [file],
+                    title: 'Student Admissions List',
+                    text: `Exported list for ${label}`
+                });
+            } catch (err) {
+                // If user cancels or share fails, fallback to standard save
+                if (err.name !== 'AbortError') {
+                    console.error("Share failed, falling back to download:", err);
+                    doc.save(fileName);
+                }
+            }
+        } else {
+            // Standard Download for Desktop
+            doc.save(fileName);
+        }
+
         closeExportModal();
     };
 
